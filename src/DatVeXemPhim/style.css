@@ -1,0 +1,44 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body{
+    background: url(https://demo.w3layouts.com/demos_new/template_demo/23-03-2018/movie_seat_selection-demo_Free/759053290/web/images/banner.jpg);
+    background-size: cover;
+    background-position: center center;
+}
+
+body,html{
+    color: white;
+}
+.movies__info ul{
+    list-style: none;
+    padding: 0;
+}
+
+.movies__info ul li{
+    display: flex;
+    margin-right: 10px;
+    align-items: center;
+}
+
+.movies__info ul li p{
+    margin-bottom: 0;
+}
+
+.movies__info ul li span{
+    width: 15px;
+    height: 15px;
+
+    display: inline-block;
+    margin-right: 10px;
+}
+
+.button__select{
+    min-width: 40px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}

@@ -188,10 +188,15 @@ const initialState = {
         taiKhoan: '',
         soGhe: ''
     },
+    error: {
+        taiKhoan: '',
+        soGhe: ''
+    },
     status: false,
     selectStart: false,
     startSelect: false,
-    checkButtonDisabled: true
+    checkButtonDisabled: true,
+    flag: false
 }
 
 export const DatVeReducer = (state = initialState, action) => {
@@ -216,6 +221,14 @@ export const DatVeReducer = (state = initialState, action) => {
         case 'SELECT_START':
             state.selectStart = true;
             return { ...state }
+        case 'DAY_DU_LIEU':
+            state.flag = action.flag;
+            state.error = action.error
+            state.value = action.value
+            console.log('state.value',state.value)
+            console.log(' state.error', state.error)
+            return { ...state }
+
         default:
             return state
     }

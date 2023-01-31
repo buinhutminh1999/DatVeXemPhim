@@ -2,17 +2,17 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 class FormNhap extends Component {
 
-    state = {
-        value: {
-            taiKhoan: '',
-            soGhe: ''
-        },
-        error: {
-            taiKhoan: '',
-            soGhe: ''
-        },
-        flag: false
-    }
+    // state = {
+    //     value: {
+    //         taiKhoan: '',
+    //         soGhe: ''
+    //     },
+    //     error: {
+    //         taiKhoan: '',
+    //         soGhe: ''
+    //     },
+    //     flag: false
+    // }
 
     getInput = (event) => {
         let { name, value, id } = event.target
@@ -28,9 +28,16 @@ class FormNhap extends Component {
             flag = false;
         }
 
-        this.setState({
-            error: { ...this.state.error, [name]: mess },
-            value: { ...this.state.value, [name]: value },
+        // this.setState({
+        //     error: { ...this.state.error, [name]: mess },
+        //     value: { ...this.state.value, [name]: value },
+        //     flag
+        // })
+
+        this.props.dispatch({
+            type: 'DAY_DU_LIEU',
+            error: { ...this.props.error, [name]: mess },
+            value: { ...this.props.value, [name]: value },
             flag
         })
 
@@ -39,13 +46,13 @@ class FormNhap extends Component {
     submitForm = (event) => {
         event.preventDefault();
         let flag = true;
-        for (const key in this.state.value) {
-            if (this.state.value[key] == '') {
+        for (const key in this.props.value) {
+            if (this.props.value[key] == '') {
 
                 flag = false;
             }
 
-            if (this.state.error[key] !== '') {
+            if (this.props.error[key] !== '') {
 
                 flag = false;
             }
@@ -54,15 +61,15 @@ class FormNhap extends Component {
             alert('Please Select your Seats NOW!')
             this.props.dispatch({
                 type: 'LUU_DU_LIEU',
-                valInput: this.state.value,
+                valInput: this.props.value,
             })
         }
     }
 
     checkButtonDisabled = () => { 
-        return this.state.flag 
-        && this.state.value.taiKhoan !== '' 
-        && this.state.value.soGhe !== ''
+        return this.props.flag 
+        && this.props.value.taiKhoan !== '' 
+        && this.props.value.soGhe !== ''
         && this.props.btnDisabled ? 
         <button className='btn btn-success'>Start Selecting</button> : 
         <button className='btn btn-success disabled'>Start Selecting</button> 
@@ -76,11 +83,11 @@ class FormNhap extends Component {
                     <div className="row">
                         <div className="col-6">
                             <input type="text" placeholder='Name' name='taiKhoan' id='account' onChange={this.getInput} />
-                            <p>{this.state.error.taiKhoan}</p>
+                            <p>{this.props.error.taiKhoan}</p>
                         </div>
                         <div className="col-6">
                             <input type="text" placeholder='Number of Seats' name='soGhe' id='seats' onChange={this.getInput} />
-                            <p>{this.state.error.soGhe}</p>
+                            <p>{this.props.error.soGhe}</p>
                         </div>
                     </div>
                     <div className='movies__button mt-4'>
@@ -97,7 +104,10 @@ const mapStatetoProps = (rootReducer) => {
     return {
         value: rootReducer.DatVeReducer.value,
         startSelect: rootReducer.DatVeReducer.startSelect,
-        btnDisabled: rootReducer.DatVeReducer.checkButtonDisabled
+        btnDisabled: rootReducer.DatVeReducer.checkButtonDisabled,
+        value: rootReducer.DatVeReducer.value,
+        error: rootReducer.DatVeReducer.error,
+        flag: rootReducer.DatVeReducer.flag,
     }
 }
 

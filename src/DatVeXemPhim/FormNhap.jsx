@@ -10,23 +10,29 @@ class FormNhap extends Component {
         error: {
             taiKhoan: '',
             soGhe: ''
-        }
+        },
+        flag: false
     }
 
     getInput = (event) => {
-        let {name, value, id} = event.target
+        let { name, value, id } = event.target
         let mess = ''
-        if(event.target.value.trim() == ''){
+        let flag = true;
+        if (event.target.value.trim() == '') {
             mess = ` Please enter an ${id}!`
-         
+            flag = false;
+
         }
         if (name == 'soGhe' && isNaN(value)) {
             mess = 'Please enter an number'
+            flag = false;
         }
+
         this.setState({
-                    error: {...this.state.error, [name]: mess},
-                    value: { ...this.state.value, [name]: value }
-                })
+            error: { ...this.state.error, [name]: mess },
+            value: { ...this.state.value, [name]: value },
+            flag
+        })
 
     }
 
@@ -35,12 +41,12 @@ class FormNhap extends Component {
         let flag = true;
         for (const key in this.state.value) {
             if (this.state.value[key] == '') {
-             
+
                 flag = false;
             }
 
-            if (this.state.error[key] == '') {
-             
+            if (this.state.error[key] !== '') {
+
                 flag = false;
             }
         }
@@ -48,9 +54,18 @@ class FormNhap extends Component {
             alert('Please Select your Seats NOW!')
             this.props.dispatch({
                 type: 'LUU_DU_LIEU',
-                valInput: this.state.value
+                valInput: this.state.value,
             })
         }
+    }
+
+    checkButtonDisabled = () => { 
+        return this.state.flag 
+        && this.state.value.taiKhoan !== '' 
+        && this.state.value.soGhe !== ''
+        && this.props.btnDisabled ? 
+        <button className='btn btn-success'>Start Selecting</button> : 
+        <button className='btn btn-success disabled'>Start Selecting</button> 
     }
 
 
@@ -69,7 +84,7 @@ class FormNhap extends Component {
                         </div>
                     </div>
                     <div className='movies__button mt-4'>
-                        {this.state.value.taiKhoan !== '' && this.state.value.soGhe !== ''  ? <button className='btn btn-success'>Start Selecting</button> : <button className='btn btn-success disabled'>Start Selecting</button> }
+                        {this.checkButtonDisabled()}
                     </div>
                 </form>
             </div>
@@ -81,7 +96,8 @@ class FormNhap extends Component {
 const mapStatetoProps = (rootReducer) => {
     return {
         value: rootReducer.DatVeReducer.value,
-        startSelect: rootReducer.DatVeReducer.startSelect
+        startSelect: rootReducer.DatVeReducer.startSelect,
+        btnDisabled: rootReducer.DatVeReducer.checkButtonDisabled
     }
 }
 

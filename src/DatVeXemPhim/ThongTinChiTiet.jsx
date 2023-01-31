@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 class ThongTinChiTiet extends Component {
     render() {
-        console.log(this.props.mangGheDaChon)
         return (
             <div className='mt-4 text-center'>
                 <table className="table bg-light">

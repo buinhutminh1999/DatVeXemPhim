@@ -191,27 +191,31 @@ const initialState = {
     status: false,
     selectStart: false,
     startSelect: false,
+    checkButtonDisabled: true
 }
 
 export const DatVeReducer = (state = initialState, action) => {
     switch (action.type) {
         case `GHE_CHON`:
             if (state.status && !state.selectStart) {
+                state.checkButtonDisabled = false;
                 let obj = state.danhSachGhe.find(item => item.hang == action.hangGhe)
                 let daDat = obj.danhSachGhe.find(item => item.soGhe == action.ds.soGhe)
                 daDat.daDat = true;
                 state.mangGheDaChon = [...state.mangGheDaChon, daDat]
                 return { ...state }
             }
-            alert('Please fill in the required information!')
+            if (!state.selectStart) {
+                alert('Please fill in the required information!')
+            }
             return state
         case 'LUU_DU_LIEU':
             state.status = true
             state.value = action.valInput
             return { ...state }
         case 'SELECT_START':
-            state.selectStart = true
-            return  {...state} 
+            state.selectStart = true;
+            return { ...state }
         default:
             return state
     }

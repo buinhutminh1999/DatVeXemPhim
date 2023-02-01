@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 class ThongTinChiTiet extends Component {
     render() {
-        console.log('this.props.value.taiKhoan', this.props.value.taiKhoan)
         return (
             <div className='mt-4 text-center'>
                 <table className="table bg-light">
@@ -22,7 +21,6 @@ class ThongTinChiTiet extends Component {
                     </tbody>
                 </table>
             </div>
-
         )
     }
 }

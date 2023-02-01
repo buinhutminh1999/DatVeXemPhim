@@ -196,7 +196,8 @@ const initialState = {
     selectStart: false,
     startSelect: false,
     checkButtonDisabled: true,
-    flag: false
+    flag: false,
+
 }
 
 export const DatVeReducer = (state = initialState, action) => {
@@ -213,7 +214,9 @@ export const DatVeReducer = (state = initialState, action) => {
             if (!state.selectStart) {
                 alert('Please fill in the required information!')
             }
-            return state
+
+
+            return { ...state }
         case 'LUU_DU_LIEU':
             state.status = true
             state.value = action.valInput
@@ -225,8 +228,6 @@ export const DatVeReducer = (state = initialState, action) => {
             state.flag = action.flag;
             state.error = action.error
             state.value = action.value
-            console.log('state.value',state.value)
-            console.log(' state.error', state.error)
             return { ...state }
 
         default:

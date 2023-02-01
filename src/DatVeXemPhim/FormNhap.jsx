@@ -2,18 +2,6 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 class FormNhap extends Component {
 
-    // state = {
-    //     value: {
-    //         taiKhoan: '',
-    //         soGhe: ''
-    //     },
-    //     error: {
-    //         taiKhoan: '',
-    //         soGhe: ''
-    //     },
-    //     flag: false
-    // }
-
     getInput = (event) => {
         let { name, value, id } = event.target
         let mess = ''
@@ -27,13 +15,7 @@ class FormNhap extends Component {
             mess = 'Please enter an number'
             flag = false;
         }
-
-        // this.setState({
-        //     error: { ...this.state.error, [name]: mess },
-        //     value: { ...this.state.value, [name]: value },
-        //     flag
-        // })
-
+        
         this.props.dispatch({
             type: 'DAY_DU_LIEU',
             error: { ...this.props.error, [name]: mess },

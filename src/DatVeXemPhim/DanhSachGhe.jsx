@@ -13,23 +13,39 @@ class DanhSachGhe extends Component {
         })
     }
 
+    checkBtnDisabled = (item,ds,disabled) => { 
+       return  this.props.mangGheDaChon.some(item => item.soGhe == ds.soGhe) 
+       ? `btn btn-success col ${disabled} button__select` 
+       : `btn btn-dark ${disabled} col button__select`     
+    }
+
     layDanhSachGhe = () => {
 
         return this.props.dsGhe.map(item => {
             if (item.hang !== '') {
                 return item.danhSachGhe.map((ds) => {
                     if (this.props.soGhe == this.props.mangGheDaChon.length) {
-                        return <button className={this.props.mangGheDaChon.some(item => item.soGhe == ds.soGhe) ? 'btn btn-success col disabled button__select' : 'btn btn-dark disabled col button__select'} key={ds.soGhe}>{ds.soGhe}</button>
+                        return <button className={this.checkBtnDisabled(item,ds,'disabled')} key={ds.soGhe}>{ds.soGhe}</button>
                     } else {
-                        return <button className={this.props.mangGheDaChon.some(item => item.soGhe == ds.soGhe) ? 'btn btn-success col disabled button__select' : 'btn btn-dark col button__select'} key={ds.soGhe} onClick={() => {
+                        return <button className={this.checkBtnDisabled(item,ds,' ')} key={ds.soGhe} onClick={() => {
+                            //check xem ghế đã được đặt hay chưa
+                            let check = this.props.mangGheDaChon.some(item => item.soGhe == ds.soGhe)
+                            let trangThaiDaDat = true;
+                            if(check){
+                                // đổi trạng thái 
+                                trangThaiDaDat = false
+                            }
                             this.props.dispatch({
                                 type: `GHE_CHON`,
                                 ds,
                                 hangGhe: item.hang,
                                 soGheChon: 0,
+                                trangThaiDaDat,
+                                soGhe: ds.soGhe
                             })
                         }}>{ds.soGhe}</button>
                     }
+                   
                 })
             }
 

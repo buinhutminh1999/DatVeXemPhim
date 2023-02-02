@@ -203,12 +203,17 @@ const initialState = {
 export const DatVeReducer = (state = initialState, action) => {
     switch (action.type) {
         case `GHE_CHON`:
-            if (state.status && !state.selectStart) {
-                state.checkButtonDisabled = false;
+            if (state.status && !state.selectStart) {// chọn ghế thành công
+                state.checkButtonDisabled = false;//button Start Selecting
                 let obj = state.danhSachGhe.find(item => item.hang == action.hangGhe)
                 let daDat = obj.danhSachGhe.find(item => item.soGhe == action.ds.soGhe)
-                daDat.daDat = true;
+                daDat.daDat = action.trangThaiDaDat;// những ghế nào đã đặt trong mảng danhSachGhe thì cho == true 
                 state.mangGheDaChon = [...state.mangGheDaChon, daDat]
+                if(!action.trangThaiDaDat){
+                   let newArr =  state.mangGheDaChon.filter(item => item.soGhe !== action.soGhe)
+                   state.mangGheDaChon = newArr
+                   return {...state}
+                }
                 return { ...state }
             }
             if (!state.selectStart) {
